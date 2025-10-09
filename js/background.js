@@ -6,6 +6,6 @@ const bgImage = document.createElement("img"); //img라는 element 생성
 
 bgImage.src =`img/${chosenImage}`;
 
-console.log(bgImage);
+// console.log(bgImage);
 
 document.body.appendChild(bgImage);
