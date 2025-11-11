@@ -15,12 +15,16 @@ function saveToDos() {
 function deleteTodo(event) {
   const li = event.target.parentElement;
   li.remove();
+  // console.log(typeof li.id); //string
+  toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id)); //li.id를 int로 변환(toDo.id가 int이므로))
+  saveToDos();
 }
 
 function paintTodo(newTodo) {
   const li = document.createElement("li"); 
+  li.id = newTodo.id;
   const span = document.createElement("span");
-  span.innerText = newTodo; //handleTodoSubmit에서 온 newTodo
+  span.innerText = newTodo.text; 
   const button = document.createElement("button");
   button.innerText = "❌";
   button.addEventListener("click", deleteTodo);
@@ -33,8 +37,12 @@ function handleTodoSubmit(event) {
   event.preventDefault();
   const newTodo = toDoInput.value;
   toDoInput.value = "";
-  toDos.push(newTodo);
-  paintTodo(newTodo);
+  const newTodoObj = {
+    text: newTodo,
+    id: Date.now(),
+  }
+  toDos.push(newTodoObj);
+  paintTodo(newTodoObj);
   saveToDos();
 }
 
@@ -52,5 +60,5 @@ if(savedToDos !== null){
   // parsedToDos.forEach(sayHello); //function 사용
   toDos = parsedToDos; //toDos에 parsedToDos를 넣어줌
   parsedToDos.forEach(paintTodo); //arrow function
-  // forEach는 array의 각 item에 대해 function을 실행하게 해줌
+  // **중요** forEach는 array의 각 item에 대해 function을 실행하게 해줌
 }
